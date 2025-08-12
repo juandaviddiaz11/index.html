@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ClickSalud – Agendar Citas con Especialistas</title>
+  <style>
+    /* Basic Reset & Typography */
+    body, h1, h2, h3, p, ul, li {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background-color: #f0f4f8;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Header Section */
+    header {
+      background-image: linear-gradient(
+          rgba(0, 123, 255, 0.6),
+          rgba(0, 123, 255, 0.6)
+        ), url('https://d2kd1atb170pxv.cloudfront.net/var/site/storage/images/1/4/7/0/50741-3-esl-ES/5d918631669e-AdobeStock_833477820-1-1-.jpg');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 60vh; /* Responsive height */
+      padding: 0 20px;
+      text-align: center;
+      /* Ensure text content is centered */
+      flex-direction: column;
+    }
+    header h1 {
+      font-size: 3rem;
+      font-weight: 900;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+      margin-bottom: 10px; /* Spacing for responsiveness */
+    }
+    header p {
+      font-size: 1.25rem;
+      margin-top: 0.5rem;
+      font-style: italic;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Navigation Bar */
+    nav {
+      background-color: #0069d9;
+      padding: 15px 0;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: flex; /* Use flexbox for navigation items */
+      justify-content: center;
+      flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 12px 24px;
+      margin: 0 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: background-color 0.3s ease, border-radius 0.3s ease;
+      white-space: nowrap; /* Prevent breaking navigation links */
+    }
+    nav a:hover {
+      background-color: #0056b3;
+      border-radius: 4px;
+    }
+
+    /* Main Container */
+    .container {
+      width: 90%;
+      max-width: 1100px;
+      margin: 50px auto;
+      padding: 0 15px; /* Add horizontal padding for smaller screens */
+      box-sizing: border-box; /* Include padding in width */
+    }
+
+    /* Section Styling */
+    section {
+      margin-bottom: 60px;
+    }
+    section h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2rem;
+      color: #0069d9;
+    }
+    section p {
+      font-size: 1.05rem;
+      color: #555;
+    }
+
+    /* Video Section */
+    .video-section {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+      height: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    .video-container iframe {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+
+    /* Doctors Grid */
+    .doctors {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+    }
+    .doctor-card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      text-align: center;
+      padding: 25px 15px 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .doctor-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    .doctor-card img {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 4px solid #0069d9;
+    }
+    .doctor-card h3 {
+      font-size: 1.4rem;
+      color: #0069d9;
+      margin-bottom: 8px;
+    }
+    .doctor-card p {
+      color: #666;
+      margin-bottom: 20px;
+      font-size: 1rem;
+    }
+    .doctor-card button {
+      background-color: #28a745;
+      border: none;
+      color: white;
+      padding: 14px;
+      font-size: 1rem;
+      border-radius: 6px;
+      width: 100%;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .doctor-card button:hover {
+      background-color: #218838;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #222;
+      color: #ddd;
+      padding: 25px 0;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    /* Responsive Design */
+
+    /* Medium devices (tablets, 768px and up) */
+    @media (max-width: 768px) {
+      header {
+        height: 50vh; /* Adjust header height */
+        padding: 0 15px;
+      }
+      header h1 {
+        font-size: 2.5rem; /* Smaller font size for header title */
+      }
+      header p {
+        font-size: 1rem; /* Smaller font size for header subtitle */
+      }
+
+      nav {
+        padding: 10px 0;
+      }
+      nav a {
+        padding: 10px 15px;
+        margin: 0 8px;
+        font-size: 0.95rem;
+      }
+
+      .container {
+        width: 95%; /* Use more width on smaller screens */
+        margin: 30px auto; /* Adjust margin */
+      }
+
+      section h2 {
+        font-size: 1.8rem; /* Smaller section titles */
+        margin-bottom: 25px;
+      }
+      section p {
+        font-size: 1rem; /* Adjust paragraph font size */
+      }
+
+      .video-section {
+        padding: 30px; /* Reduce padding */
+      }
+
+      .doctors {
+        /* Adjust grid to have min 220px columns, so it might show 2 or 3 columns */
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+      }
+      .doctor-card {
+        padding: 20px 10px 15px; /* Adjust card padding */
+      }
+      .doctor-card img {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 10px;
+      }
+      .doctor-card h3 {
+        font-size: 1.3rem;
+      }
+      .doctor-card p {
+        font-size: 0.95rem;
+        margin-bottom: 15px;
+      }
+      .doctor-card button {
+        padding: 12px;
+        font-size: 0.95rem;
+      }
+    }
+
+    /* Small devices (phones, 480px and down) */
+    @media (max-width: 480px) {
+      header {
+        height: 40vh; /* Even smaller header height */
+        padding: 0 10px;
+      }
+      header h1 {
+        font-size: 2rem; /* Mobile header title */
+      }
+      header p {
+        font-size: 0.9rem; /* Mobile header subtitle */
+      }
+
+      nav {
+        flex-direction: column; /* Stack navigation items vertically */
+        padding: 10px 0;
+      }
+      nav a {
+        display: block; /* Make links take full width */
+        margin: 5px 0; /* Add vertical margin */
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separator */
+        font-size: 0.9rem;
+      }
+      nav a:last-child {
+        border-bottom: none; /* No separator for the last link */
+      }
+
+      .container {
+        width: 98%; /* Almost full width for mobile */
+        margin: 20px auto;
+      }
+
+      section {
+        margin-bottom: 40px; /* Reduce space between sections */
+      }
+      section h2 {
+        font-size: 1.5rem; /* Smaller section titles for mobile */
+        margin-bottom: 20px;
+      }
+      section p {
+        font-size: 0.95rem;
+      }
+
+      .video-section {
+        padding: 20px; /* Further reduce padding */
+      }
+
+      .doctors {
+        grid-template-columns: 1fr; /* Stack doctor cards in a single column */
+        gap: 15px; /* Reduce gap */
+      }
+      .doctor-card {
+        padding: 15px 10px;
+      }
+      .doctor-card img {
+        width: 100px;
+        height: 100px;
+      }
+      .doctor-card h3 {
+        font-size: 1.2rem;
+      }
+      .doctor-card p {
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+      }
+      .doctor-card button {
+        padding: 10px;
+        font-size: 0.9rem;
+      }
+
+      footer {
+        padding: 20px 0;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>ClickSalud</h1>
+      <p>Agenda tu cita con profesionales de la salud altamente capacitados</p>
+    </div>
+  </header>
+  <nav>
+    <a href="#home">Inicio</a>
+    <a href="#about">Sobre Nosotros</a>
+    <a href="#services">Servicios</a>
+    <a href="#doctors">Doctores</a>
+    <a href="#contact">Contacto</a>
+  </nav>
+  <div class="container">
+    <section id="home" class="video-section">
+      <h2>Bienvenido a ClickSalud</h2>
+      <p>Descubre cómo ClickSalud te ayuda a agendar tus citas médicas de forma fácil y rápida.</p>
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/HsDBbRqI1Lk?si=Cmz4SSYFLIGqF3S0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+    </section>
+
+    <section id="about">
+      <h2>Sobre Nosotros</h2>
+      <p>En nuestro consultorio médico, nos enorgullece brindar atención médica de calidad a todos nuestros pacientes. Con años de experiencia, nuestros doctores están comprometidos con el bienestar y la salud de cada individuo.</p>
+    </section>
+
+    <section id="doctors">
+      <h2>Nuestros Doctores</h2>
+      <div class="doctors">
+        <div class="doctor-card">
+          <img src="https://randomuser.me/api/portraits/men/70.jpg" alt="Dr. Juan Pérez" onerror="this.onerror=null;this.src='https://placehold.co/140x140/cccccc/333333?text=Dr.+Juan';" />
+          <h3>Dr. Juan Pérez</h3>
+          <p>Medicina General</p>
+          <button onclick="window.location.href='index4.html'">Solicitar Cita</button>
+        </div>
+        <div class="doctor-card">
+          <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Dra. Ana López" onerror="this.onerror=null;this.src='https://placehold.co/140x140/cccccc/333333?text=Dra.+Ana';" />
+          <h3>Dra. Ana López</h3>
+          <p>Pediatría</p>
+          <button onclick="window.location.href='index4.html'">Solicitar Cita</button>
+        </div>
+        <div class="doctor-card">
+          <img src="https://randomuser.me/api/portraits/men/55.jpg" alt="Dr. Carlos Mejia" onerror="this.onerror=null;this.src='https://placehold.co/140x140/cccccc/333333?text=Dr.+Carlos';" />
+          <h3>Dr. Carlos Mejía</h3>
+          <p>Dermatología</p>
+          <button onclick="window.location.href='index4.html'">Solicitar Cita</button>
+        </div>
+        <div class="doctor-card">
+          <img src="https://randomuser.me/api/portraits/women/40.jpg" alt="Dra. Mariana García" onerror="this.onerror=null;this.src='https://placehold.co/140x140/cccccc/333333?text=Dra.+Mariana';" />
+          <h3>Dra. Mariana García</h3>
+          <p>Ginecología</p>
+          <button onclick="window.location.href='index4.html'">Solicitar Cita</button>
+        </div>
+        <div class="doctor-card">
+          <img src="https://randomuser.me/api/portraits/men/60.jpg" alt="Dr. Luis Ramírez" onerror="this.onerror=null;this.src='https://placehold.co/140x140/cccccc/333333?text=Dr.+Luis';" />
+          <h3>Dr. Luis Ramírez</h3>
+          <p>Cardiología</p>
+          <button onclick="window.location.href='index4.html'">Solicitar Cita</button>
+        </div>
+      </div>
+    </section>
+  </div>
+  <footer>
+    <p>© 2025 ClickSalud Consultorio Médico</p>
+  </footer>
+</body>
+</html>

@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ClickSalud – Agendar Citas con Especialistas</title>
-    <!-- Bootstrap CSS -->
+    <title>SmartSalud – Agendar Citas con Especialistas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
@@ -42,53 +41,44 @@
             transition: background-color 0.5s ease, color 0.5s ease;
         }
 
-        /* Fixed Header */
-        header {
-            background-image: var(--header-bg);
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        header h1 {
-            font-size: 2rem;
-            font-weight: 900;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-            flex-grow: 1; /* Para que el h1 ocupe el espacio central */
-        }
-        header .theme-toggle {
-            margin-right: 1rem;
-        }
-
-        /* Hero section (below fixed header) */
+        /* Hero section and Header combined */
         .hero-section {
             background-image: var(--header-bg);
             background-size: cover;
             background-position: center;
             color: white;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 60vh;
+            height: 80vh; /* Banner más grande */
             padding: 0 20px;
             text-align: center;
-            margin-top: 80px; /* Espacio para el header fijo */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        .hero-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero-section h1 {
+            font-size: 3.5rem; /* Título más grande */
+            font-weight: 900;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
         }
         .hero-section p {
-            font-size: 1.25rem;
+            font-size: 1.5rem; /* Texto más grande */
             margin-top: 0.5rem;
             font-style: italic;
             text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+        }
+        .theme-toggle-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
         }
 
         /* Container */
@@ -98,7 +88,7 @@
             margin: 50px auto;
         }
 
-        /* Secciones */
+        /* Sections */
         section {
             margin-bottom: 60px;
         }
@@ -113,6 +103,84 @@
             font-size: 1.05rem;
             color: var(--text-color);
         }
+        
+        /* News Section */
+        .news-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .news-card {
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-height: 300px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .news-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .news-card-overlay {
+            background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.2));
+            padding: 20px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .news-card-overlay h4 {
+            font-size: 1.5rem;
+            margin-bottom: 20px; /* Aumentar espacio después del título */
+        }
+
+        .news-card-overlay .image-container {
+            flex-grow: 1; /* Permite que la imagen ocupe el espacio restante */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .news-card-overlay .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .news-card-overlay p {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+        
+        .news-card-overlay a {
+            display: block;
+            text-align: center;
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .news-card-overlay a:hover {
+            background-color: #218838;
+        }
 
         /* Video Section */
         .video-section {
@@ -123,7 +191,7 @@
             transition: background-color 0.5s ease, box-shadow 0.5s ease;
         }
         .video-section .video-description {
-            margin-bottom: 3rem; /* Más espacio entre texto y video */
+            margin-bottom: 3rem; 
         }
         .video-container {
             position: relative;
@@ -206,42 +274,42 @@
             padding: 5px 0;
             color: inherit;
         }
-        .bootstrap-alert-example {
-          margin-top: 2rem;
-          text-align: center;
+        /* Para justificar el texto del "Sobre Nosotros" */
+        #about p {
+            text-align: justify;
+        }
+        /* Estilos para el nuevo botón */
+        #zoom-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1001;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>ClickSalud</h1>
-        <button id="theme-toggle" class="btn btn-secondary theme-toggle">Modo Oscuro</button>
-    </header>
-
     <div class="hero-section">
-        <div>
-            <h1>ClickSalud</h1>
+        <div class="theme-toggle-container">
+            <button id="theme-toggle" class="btn btn-secondary">Modo Oscuro</button>
+        </div>
+        <div class="hero-content">
+            <h1>SmartSalud</h1>
             <p>Agenda tu cita con profesionales de la salud altamente capacitados</p>
         </div>
     </div>
 
     <div class="container">
         <section id="home" class="video-section">
-            <h2>Bienvenido a ClickSalud</h2>
-            <p class="video-description">Descubre cómo ClickSalud te ayuda a agendar tus citas médicas de forma fácil y rápida.</p>
+            <h2>Bienvenido a SmartSalud</h2>
+            <p class="video-description text-center">Descubre cómo SmartSalud te ayuda a agendar tus citas médicas de forma fácil y rápida. Somos una plataforma diseñada para mejorar el acceso a especialistas de la salud en la región de Boyacá, reduciendo los tiempos de espera y facilitando la conexión entre pacientes y médicos. Con nuestra tecnología, puedes encontrar el especialista que necesitas, ver su disponibilidad y agendar tu consulta de manera intuitiva y sin complicaciones. Tu bienestar es nuestra prioridad.</p>
             <div class="video-container">
                 <iframe src="https://www.youtube.com/embed/HsDBbRqI1Lk?si=Cmz4SSYFLIGqF3S0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            </div>
-            <div class="bootstrap-alert-example">
-                <div class="alert alert-info" role="alert">
-                    ¡Utilizamos Bootstrap para un diseño responsivo y moderno!
-                </div>
             </div>
         </section>
 
         <section id="about">
             <h2>Sobre Nosotros</h2>
-            <p>En nuestro consultorio médico, nos enorgullece brindar atención médica de calidad a todos nuestros pacientes. Con años de experiencia, nuestros doctores están comprometidos con el bienestar y la salud de cada individuo.</p>
+            <p>En SmartSalud, nos enorgullece brindar atención médica de calidad a todos nuestros pacientes. Esta empresa fue diseñada para ofrecer un mejor acceso a especialistas en Colombia, permitiendo agendar citas de forma rápida y segura desde la comodidad de tu hogar. Nuestro objetivo es conectar a las personas con los mejores profesionales de la salud, eliminando barreras y optimizando el tiempo, para que tu bienestar sea nuestra prioridad. Con años de experiencia, nuestros doctores están comprometidos con la salud de cada individuo, utilizando tecnología de punta para un servicio eficiente y humano.</p>
         </section>
 
         <section id="doctors">
@@ -279,21 +347,56 @@
                 </div>
             </div>
         </section>
+
+        <section id="news">
+            <h2>Últimos Avances en Salud</h2>
+            <div class="news-container">
+                <div class="news-card">
+                    <div class="news-card-overlay">
+                        <h4>Investigación en Rusia revela avances en la vacuna contra el cáncer</h4>
+                        <div class="image-container">
+                            <img src="https://images.unsplash.com/photo-1584308698114-1d8f14b62f44?q=80&w=1974&auto=format&fit=crop" alt="Vacuna contra el cáncer" />
+                        </div>
+                        <a href="https://www.who.int/news-room/fact-sheets/detail/cancer" target="_blank">Leer más</a>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <div class="news-card-overlay">
+                        <h4>La inteligencia artificial revoluciona el diagnóstico de enfermedades</h4>
+                        <div class="image-container">
+                            <img src="https://images.unsplash.com/photo-1620092289456-42f1f5d6067b?q=80&w=1932&auto=format&fit=crop" alt="Inteligencia Artificial" />
+                        </div>
+                        <a href="https://www.who.int/es/news-room/spotlight/artificial-intelligence-in-health" target="_blank">Leer más</a>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <div class="news-card-overlay">
+                        <h4>Nuevos tratamientos para enfermedades neurológicas en la fase 3 de ensayos</h4>
+                        <div class="image-container">
+                            <img src="https://images.unsplash.com/photo-1549487532-61a7a1b02b54?q=80&w=1935&auto=format&fit=crop" alt="Enfermedades neurológicas" />
+                        </div>
+                        <a href="https://www.who.int/es/news-room/fact-sheets/detail/neurological-disorders" target="_blank">Leer más</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
     </div>
 
+    <button id="zoom-toggle" class="btn btn-primary">Aumentar Texto</button>
+
     <footer>
-        <p>© 2025 ClickSalud Consultorio Médico</p>
-        <p>Juan Diaz Villamil</p>
-        <p>Aprendiz de Programación | Número: 3132306034</p>
-        <p>Correo: juan.diaz16@uptc.edu.co</p>
+        <p>Desarrollado por Juan Diaz Villamil</p>
+        <p>Estudiante de la UPTC</p>
+        <p>Contacto: juan.diaz16@uptc.edu.co</p>
     </footer>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const themeToggleBtn = document.getElementById('theme-toggle');
+            const zoomToggleBtn = document.getElementById('zoom-toggle');
             const body = document.body;
 
             themeToggleBtn.addEventListener('click', () => {
@@ -301,6 +404,18 @@
                 const isDarkMode = body.classList.contains('dark-mode');
                 themeToggleBtn.textContent = isDarkMode ? 'Modo Claro' : 'Modo Oscuro';
             });
+
+            zoomToggleBtn.addEventListener('click', () => {
+                const currentFontSize = parseFloat(window.getComputedStyle(body, null).getPropertyValue('font-size'));
+                if (currentFontSize < 20) {
+                    body.style.fontSize = (currentFontSize + 2) + 'px';
+                    zoomToggleBtn.textContent = 'Restablecer Texto';
+                } else {
+                    body.style.fontSize = ''; // Restablece el tamaño de fuente al original
+                    zoomToggleBtn.textContent = 'Aumentar Texto';
+                }
+            });
         });
     </script>
 </body>
+</html>

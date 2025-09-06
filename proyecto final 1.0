@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ClickSalud – Agendar Citas con Especialistas</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f0f4f8;
+            --text-color: #333;
+            --header-bg: linear-gradient(rgba(0, 123, 255, 0.6), rgba(0, 123, 255, 0.6)), url('https://d2kd1atb170pxv.cloudfront.net/var/site/storage/images/1/4/7/0/50741-3-esl-ES/5d918631669e-AdobeStock_833477820-1-1-.jpg');
+            --primary-color: #0069d9;
+            --card-bg: #fff;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --footer-bg: #222;
+            --footer-text: #ddd;
+        }
+
+        body.dark-mode {
+            --bg-color: #1a1a1a;
+            --text-color: #ddd;
+            --header-bg: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://d2kd1atb170pxv.cloudfront.net/var/site/storage/images/1/4/7/0/50741-3-esl-ES/5d918631669e-AdobeStock_833477820-1-1-.jpg');
+            --primary-color: #66b3ff;
+            --card-bg: #2a2a2a;
+            --card-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+            --footer-bg: #111;
+            --footer-text: #aaa;
+        }
+
+        body, h1, h2, h3, p, ul, li {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* Fixed Header */
+        header {
+            background-image: var(--header-bg);
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        header h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            flex-grow: 1; /* Para que el h1 ocupe el espacio central */
+        }
+        header .theme-toggle {
+            margin-right: 1rem;
+        }
+
+        /* Hero section (below fixed header) */
+        .hero-section {
+            background-image: var(--header-bg);
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 60vh;
+            padding: 0 20px;
+            text-align: center;
+            margin-top: 80px; /* Espacio para el header fijo */
+        }
+        .hero-section p {
+            font-size: 1.25rem;
+            margin-top: 0.5rem;
+            font-style: italic;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Container */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 50px auto;
+        }
+
+        /* Secciones */
+        section {
+            margin-bottom: 60px;
+        }
+        section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            color: var(--primary-color);
+            transition: color 0.5s ease;
+        }
+        section p {
+            font-size: 1.05rem;
+            color: var(--text-color);
+        }
+
+        /* Video Section */
+        .video-section {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            transition: background-color 0.5s ease, box-shadow 0.5s ease;
+        }
+        .video-section .video-description {
+            margin-bottom: 3rem; /* Más espacio entre texto y video */
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .video-container iframe {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Doctors */
+        .doctors {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+        }
+        .doctor-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            text-align: center;
+            padding: 25px 15px 20px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.5s ease;
+        }
+        .doctor-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        .doctor-card img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 4px solid var(--primary-color);
+            transition: border-color 0.5s ease;
+        }
+        .doctor-card h3 {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            transition: color 0.5s ease;
+        }
+        .doctor-card p {
+            color: var(--text-color);
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+        .doctor-card button {
+            background-color: #28a745;
+            border: none;
+            color: white;
+            padding: 14px;
+            font-size: 1rem;
+            border-radius: 6px;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .doctor-card button:hover {
+            background-color: #218838;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 25px 0;
+            text-align: center;
+            font-size: 0.95rem;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+        footer p {
+            margin: 0;
+            padding: 5px 0;
+            color: inherit;
+        }
+        .bootstrap-alert-example {
+          margin-top: 2rem;
+          text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ClickSalud</h1>
+        <button id="theme-toggle" class="btn btn-secondary theme-toggle">Modo Oscuro</button>
+    </header>
+
+    <div class="hero-section">
+        <div>
+            <h1>ClickSalud</h1>
+            <p>Agenda tu cita con profesionales de la salud altamente capacitados</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <section id="home" class="video-section">
+            <h2>Bienvenido a ClickSalud</h2>
+            <p class="video-description">Descubre cómo ClickSalud te ayuda a agendar tus citas médicas de forma fácil y rápida.</p>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/HsDBbRqI1Lk?si=Cmz4SSYFLIGqF3S0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <div class="bootstrap-alert-example">
+                <div class="alert alert-info" role="alert">
+                    ¡Utilizamos Bootstrap para un diseño responsivo y moderno!
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <h2>Sobre Nosotros</h2>
+            <p>En nuestro consultorio médico, nos enorgullece brindar atención médica de calidad a todos nuestros pacientes. Con años de experiencia, nuestros doctores están comprometidos con el bienestar y la salud de cada individuo.</p>
+        </section>
+
+        <section id="doctors">
+            <h2>Nuestros Doctores</h2>
+            <div class="doctors">
+                <div class="doctor-card">
+                    <img src="https://randomuser.me/api/portraits/men/70.jpg" alt="Dr. Juan Pérez" />
+                    <h3>Dr. Juan Pérez</h3>
+                    <p>Medicina General</p>
+                    <button class="btn btn-success" onclick="window.location.href='index4.html'">Solicitar Cita</button>
+                </div>
+                <div class="doctor-card">
+                    <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Dra. Ana López" />
+                    <h3>Dra. Ana López</h3>
+                    <p>Pediatría</p>
+                    <button class="btn btn-success" onclick="window.location.href='index4.html'">Solicitar Cita</button>
+                </div>
+                <div class="doctor-card">
+                    <img src="https://randomuser.me/api/portraits/men/55.jpg" alt="Dr. Carlos Mejia" />
+                    <h3>Dr. Carlos Mejía</h3>
+                    <p>Dermatología</p>
+                    <button class="btn btn-success" onclick="window.location.href='index4.html'">Solicitar Cita</button>
+                </div>
+                <div class="doctor-card">
+                    <img src="https://randomuser.me/api/portraits/women/40.jpg" alt="Dra. Mariana García" />
+                    <h3>Dra. Mariana García</h3>
+                    <p>Ginecología</p>
+                    <button class="btn btn-success" onclick="window.location.href='index4.html'">Solicitar Cita</button>
+                </div>
+                <div class="doctor-card">
+                    <img src="https://randomuser.me/api/portraits/men/60.jpg" alt="Dr. Luis Ramírez" />
+                    <h3>Dr. Luis Ramírez</h3>
+                    <p>Cardiología</p>
+                    <button class="btn btn-success" onclick="window.location.href='index4.html'">Solicitar Cita</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2025 ClickSalud Consultorio Médico</p>
+        <p>Juan Diaz Villamil</p>
+        <p>Aprendiz de Programación | Número: 3132306034</p>
+        <p>Correo: juan.diaz16@uptc.edu.co</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const body = document.body;
+
+            themeToggleBtn.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                const isDarkMode = body.classList.contains('dark-mode');
+                themeToggleBtn.textContent = isDarkMode ? 'Modo Claro' : 'Modo Oscuro';
+            });
+        });
+    </script>
+</body>
